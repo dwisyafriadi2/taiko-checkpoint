@@ -4,14 +4,77 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Taiko Rank Checker</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 20px;
+            padding: 0;
+            color: #333;
+        }
+        h1 {
+            color: #007bff;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+        }
+        .card {
+            background: #f8f9fa;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .error {
+            color: red;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        ul li {
+            margin-bottom: 10px;
+        }
+        .breakdown {
+            margin-top: 20px;
+        }
+    </style>
 </head>
 <body>
-    <h1>Check Your Taiko Rank</h1>
-    <form method="POST" action="/">
-        <label for="address">Enter Ethereum Address:</label><br>
-        <input type="text" id="address" name="address" required><br><br>
-        <button type="submit">Check Rank</button>
-    </form>
-    <hr>
-    <% if (error) { %>\n        <p style="color:red;">Error: <%= error %></p>\n       <% } %>\n       <% if (data) { %>\n        <h2>Rank Details:</h2>\n        <ul>\n            <li><strong>Rank:</strong> <%= data.rank %></li>\n            <li><strong>Score:</strong> <%= data.score %></li>\n            <li><strong>Total Score:</strong> <%= data.totalScore %></li>\n            <li><strong>Multiplier:</strong> <%= data.multiplier %></li>\n            <li><strong>Total:</strong> <%= data.total %></li>\n            <li><strong>Blacklisted:</strong> <%= data.blacklisted %></li>\n        </ul>\n        <h3>Breakdown:</h3>\n        <ul>\n            <% data.breakdown.forEach(breakdown => { %>\n                <li><strong>Event:</strong> <%= breakdown.event %> | <strong>Total Points:</strong> <%= breakdown.total_points %></li>\n            <% }) %>\n        </ul>\n       <% } %>\n   </body>
+    <div class="container">
+        <h1>Check Your Taiko Rank</h1>
+        <form method="POST">
+            <label for="address">Enter Ethereum Address:</label><br>
+            <input type="text" id="address" name="address" required style="width: 100%; padding: 10px; margin: 10px 0;"><br>
+            <button type="submit" style="padding: 10px 20px; background: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer;">Check Rank</button>
+        </form>
+        <hr>
+        <% if (error) { %>
+            <p class="error">Error: <%= error %></p>
+        <% } %>
+        <% if (data) { %>
+            <div class="card">
+                <h2>Rank Details</h2>
+                <ul>
+                    <li><strong>Rank:</strong> <%= data.rank %></li>
+                    <li><strong>Score:</strong> <%= data.score %></li>
+                    <li><strong>Total Score:</strong> <%= data.totalScore %></li>
+                    <li><strong>Multiplier:</strong> <%= data.multiplier %></li>
+                    <li><strong>Total:</strong> <%= data.total %></li>
+                    <li><strong>Blacklisted:</strong> <%= data.blacklisted ? 'Yes' : 'No' %></li>
+                </ul>
+                <div class="breakdown">
+                    <h3>Breakdown</h3>
+                    <ul>
+                        <% data.breakdown.forEach(breakdown => { %>
+                            <li><strong>Event:</strong> <%= breakdown.event %> | <strong>Total Points:</strong> <%= breakdown.total_points %></li>
+                        <% }) %>
+                    </ul>
+                </div>
+            </div>
+        <% } %>
+    </div>
+</body>
 </html>
