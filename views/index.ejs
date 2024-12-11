@@ -12,11 +12,11 @@
             padding: 0;
             color: #333;
         }
-        h1 {
+        h1, h2, h3 {
             color: #007bff;
         }
         .container {
-            max-width: 600px;
+            max-width: 800px;
             margin: auto;
         }
         .card {
@@ -37,8 +37,30 @@
         ul li {
             margin-bottom: 10px;
         }
-        .breakdown {
+        .breakdown, .history {
             margin-top: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f1f1f1;
+        }
+        a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
         }
     </style>
 </head>
@@ -73,6 +95,33 @@
                         <% }) %>
                     </ul>
                 </div>
+            </div>
+        <% } %>
+        <% if (history) { %>
+            <div class="card">
+                <h2>Transaction History</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Event</th>
+                            <th>Points</th>
+                            <th>Multiplier</th>
+                            <th>Transaction Hash</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% history.forEach(item => { %>
+                            <tr>
+                                <td><%= new Date(item.date * 1000).toLocaleString() %></td>
+                                <td><%= item.event %></td>
+                                <td><%= item.points %></td>
+                                <td><%= item.multiplier %></td>
+                                <td><a href="https://etherscan.io/tx/<%= item.tx_hash %>" target="_blank"><%= item.tx_hash %></a></td>
+                            </tr>
+                        <% }) %>
+                    </tbody>
+                </table>
             </div>
         <% } %>
     </div>
